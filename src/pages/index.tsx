@@ -1,4 +1,5 @@
 import { type NextPage } from "next";
+import Image from "next/image";
 import Head from "next/head";
 import { SignIn, SignInButton, useUser, SignOutButton } from "@clerk/nextjs";
 
@@ -10,10 +11,12 @@ const CreatePostWizard = () => {
 
   return (
     <div className="flex gap-4">
-      <img
+      <Image
         src={user.profileImageUrl}
         alt="Profile image"
         className="h-24 w-24 rounded-full"
+        width={56}
+        height={56}
       />
       <input
         placeholder="Escribe algo!"
@@ -29,7 +32,13 @@ const PostView = (props: PostWithUser) => {
   const { post, author } = props;
   return (
     <div key={post.id} className="flex border-b border-slate-300 p-4">
-      <img src={author.profilePicture} className="h-24 w-24 rounded-full" />
+      <Image
+        src={author.profilePicture}
+        className="h-24 w-24 rounded-full  "
+        alt="`@${author.username}`'s foto de perfil"
+        width={56}
+        height={56}
+      />
       <div className="flex flex-col p-4 ">
         <div className="between flex">
           <span>{`@${author.username}`}</span>
