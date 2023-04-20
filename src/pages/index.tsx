@@ -1,12 +1,11 @@
 import { type NextPage } from "next";
 import Image from "next/image";
 import Head from "next/head";
-import Script from "next/script";
 import { SignIn, SignInButton, useUser, SignOutButton } from "@clerk/nextjs";
-
 import { RouterOutputs, api } from "~/utils/api";
 import { LoadingPage, LoadingSpinner } from "~/components/loading";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const CreatePostWizard = () => {
   const { user } = useUser();
@@ -18,6 +17,14 @@ const CreatePostWizard = () => {
   const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
     onSuccess: () => {
       setInput(""), void ctx.posts.getAll.invalidate();
+    },
+    onError: (e) => {
+      const errorMessage = e.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        toast.error(errorMessage[0]);
+      } else {
+        toast.error("Algo salio mal");
+      }
     },
   });
 
@@ -39,7 +46,14 @@ const CreatePostWizard = () => {
         onChange={(e) => setInput(e.target.value)}
         disabled={isPosting}
       />
-      <button onClick={() => mutate({ content: input })}>Publicar</button>
+      {input !== "" && input.length < 101 && !isPosting && (
+        <button onClick={() => mutate({ content: input })}>Publicar</button>
+      )}
+      {isPosting && (
+        <div className="flex items-center justify-center">
+          <LoadingSpinner size={20} />
+        </div>
+      )}
     </div>
   );
 };
