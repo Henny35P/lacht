@@ -1,4 +1,5 @@
 import { number } from "zod";
+import { PageLayout } from "./layouts";
 
 export const LoadingSpinner = (props: { size?: number }) => {
   return (
@@ -28,8 +29,10 @@ export const LoadingSpinner = (props: { size?: number }) => {
 
 export const LoadingPage = () => {
   return (
-    <div className="right-0 top-0 flex h-screen w-auto items-center justify-center">
-      <LoadingSpinner size={60} />
-    </div>
+    <PageLayout>
+      <div className="right-0 top-0 flex h-screen w-auto items-center justify-center">
+        <LoadingSpinner size={60} />
+      </div>
+    </PageLayout>
   );
 };
