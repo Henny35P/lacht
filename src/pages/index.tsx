@@ -1,13 +1,12 @@
 import { type NextPage } from "next";
 import Image from "next/image";
-import Head from "next/head";
-import { SignIn, SignInButton, useUser, SignOutButton } from "@clerk/nextjs";
-import { RouterOutputs, api } from "~/utils/api";
+import { SignIn, SignInButton, useUser } from "@clerk/nextjs";
+import { api } from "~/utils/api";
 import { LoadingPage, LoadingSpinner } from "~/components/loading";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Link from "next/link";
 import { PageLayout } from "~/components/layouts";
+import { PostView } from "~/components/postview";
 
 const CreatePostWizard = () => {
   const { user } = useUser();
@@ -58,32 +57,6 @@ const CreatePostWizard = () => {
           <LoadingSpinner size={20} />
         </div>
       )}
-    </div>
-  );
-};
-
-type PostWithUser = RouterOutputs["posts"]["getAll"][number];
-
-const PostView = (props: PostWithUser) => {
-  const { post, author } = props;
-  return (
-    <div key={post.id} className="flex border-b border-slate-300 p-4">
-      <Image
-        src={author.profilePicture}
-        className="h-24 w-24 rounded-full  "
-        alt="`@${author.username}`'s foto de perfil"
-        width={56}
-        height={56}
-      />
-      <div className="flex flex-col p-4 ">
-        <div className="between flex">
-          <Link href={`/@${author.username}`}>
-            {" "}
-            <span>{`@${author.username}`}</span>
-          </Link>
-        </div>
-        <Link href={`/post/${post.id}`}>{post.content} </Link>
-      </div>
     </div>
   );
 };

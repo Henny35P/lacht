@@ -4,6 +4,24 @@ import { SignIn } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 import Image from "next/image";
 
+const ProfileFeed = (props: { userId: string }) => {
+  const { data, isLoading } = api.posts.getPostsByUserId.useQuery({
+    userId: props.userId,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
+  if (!data || data.length === 0) return <div>No hay posts</div>;
+
+  return (
+    <div className=" flex flex-col">
+      {data.map((fullPost) => (
+        <PostView {...fullPost} key={fullPost.post.id} />
+      ))}
+    </div>
+  );
+};
+
 const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
   const { data, isLoading } = api.profile.getUserByUsername.useQuery({
     username,
@@ -31,6 +49,7 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
           <div>{data.username}</div>
           <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
         </div>
+        <ProfileFeed userId={data.id} />
       </PageLayout>
     </>
   );
@@ -42,6 +61,7 @@ import { prisma } from "~/server/db";
 import superjson from "superjson";
 import { PageLayout } from "~/components/layouts";
 import next from "next/types";
+import { PostView } from "~/components/postview";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const helpers = createServerSideHelpers({
