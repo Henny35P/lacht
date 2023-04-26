@@ -3,6 +3,9 @@ import Head from "next/head";
 import { SignIn } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 import Image from "next/image";
+import { PageLayout } from "~/components/layouts";
+import { PostView } from "~/components/postview";
+import { helpers } from "~/server/helpers/ssgHelper";
 
 const ProfileFeed = (props: { userId: string }) => {
   const { data, isLoading } = api.posts.getPostsByUserId.useQuery({
@@ -55,21 +58,7 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
   );
 };
 
-import { createServerSideHelpers } from "@trpc/react-query/server";
-import { appRouter } from "~/server/api/root";
-import { prisma } from "~/server/db";
-import superjson from "superjson";
-import { PageLayout } from "~/components/layouts";
-import next from "next/types";
-import { PostView } from "~/components/postview";
-
 export const getStaticProps: GetStaticProps = async (context) => {
-  const helpers = createServerSideHelpers({
-    router: appRouter,
-    ctx: { prisma, userId: null },
-    transformer: superjson, // optional - adds superjson serialization
-  });
-
   const slug = context.params?.slug;
 
   if (typeof slug !== "string") throw new Error("no slug");

@@ -1,26 +1,50 @@
-import { type NextPage } from "next";
-import Image from "next/image";
+import { type GetStaticProps, type NextPage } from "next";
 import Head from "next/head";
-import { SignIn, SignInButton, useUser, SignOutButton } from "@clerk/nextjs";
-import { RouterOutputs, api } from "~/utils/api";
-import { LoadingPage, LoadingSpinner } from "~/components/loading";
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { SignIn } from "@clerk/nextjs";
+import { api } from "~/utils/api";
+import Image from "next/image";
 import { PageLayout } from "~/components/layouts";
-const SinglePost: NextPage = () => {
+import { PostView } from "~/components/postview";
+import { helpers } from "~/server/helpers/ssgHelper";
+
+const SinglePostPage: NextPage<{ id: string }> = ({ id }) => {
+  const { data, isLoading } = api.posts.getById.useQuery({
+    id,
+  });
+
+  // No deberia llegar en ningun punto a este estado
+  if (isLoading) return <div>Loading...</div>;
+
+  if (!data) return <div>No encontrado</div>;
   return (
     <>
       <Head>
-        <title>Perfil</title>
+        <title>{`${data.post.content} - ${data.author.username}`}</title>
       </Head>
       <PageLayout>
-        <div className="flex h-auto justify-center  ">
-          Soy un post!
-          <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
-        </div>
+        <PostView {...data} />
       </PageLayout>
     </>
   );
 };
 
-export default SinglePost;
+export const getStaticProps: GetStaticProps = async (context) => {
+  const id = context.params?.id;
+
+  if (typeof id !== "string") throw new Error("no id");
+
+  await helpers.posts.getById.prefetch({ id });
+
+  return {
+    props: {
+      trpcState: helpers.dehydrate(),
+      id,
+    },
+  };
+};
+
+export const getStaticPaths = () => {
+  return { paths: [], fallback: "blocking" };
+};
+
+export default SinglePostPage;
