@@ -1,12 +1,12 @@
-# Create T3 App
+# lacht 
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Serverless webapp que permite a un usuario publicar un comentario sobre lo que quiera. Otros usuarios podran ver estos comentarios
+y presionar en el perfil para ver todas las publicaciones de cierto usuario. Se encuentra desplegado a través de Vercel en el siguiente enlace: https://lacht.vercel.app/
 
-## What's next? How do I make an app with this?
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Proyecto creado usando el [T3 Stack](https://create.t3.gg/) y siguiendo el siguiente tutorial de [theo.gg](https://www.youtube.com/watch?v=YkOSUVzOAA4)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## ¿Qué tecnologías se usaron para este proyecto?
 
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
@@ -14,15 +14,7 @@ If you are not familiar with the different technologies used in this project, pl
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
-## Learn More
+ -- Hosting --
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- [Vercel](https://vercel.com)
+- [Planetscale](https://planetscale.com)
