@@ -1,8 +1,6 @@
 import { type GetStaticProps, type NextPage } from "next";
 import Head from "next/head";
-import { SignIn } from "@clerk/nextjs";
 import { api } from "~/utils/api";
-import Image from "next/image";
 import { PageLayout } from "~/components/layouts";
 import { PostView } from "~/components/postview";
 import { helpers } from "~/server/helpers/ssgHelper";

@@ -40,16 +40,19 @@ const ProfilePage: NextPage<{ username: string }> = ({ username }) => {
         <title>{data.username}</title>
       </Head>
       <PageLayout>
-        <div className=" h-48  border-slate-400 bg-slate-200">
-          <Image
-            src={data.profilePicture}
-            alt={`Foto de perfil de ${data.username ?? ""} `}
-            width={128}
-            height={128}
-            className="-m-2 rounded-full border-2 border-black"
-          />
-
-          <div>{data.username}</div>
+        <div className=" grid h-48 grid-cols-4 border drop-shadow-md">
+          <div className=" col-span-1 flex items-center justify-center">
+            <Image
+              src={data.profilePicture}
+              alt={`Foto de perfil de ${data.username ?? ""} `}
+              width={128}
+              height={128}
+              className="  rounded-full  border-2 border-black "
+            />
+          </div>
+          <div className="col-span-2 flex items-center justify-center text-5xl ">
+            <h1 className="drop-shadow-xl">{`@${data.username ?? ""}`}</h1>
+          </div>
           <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" />
         </div>
         <ProfileFeed userId={data.id} />
